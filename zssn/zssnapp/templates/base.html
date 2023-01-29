@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    {% block estilo %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1 id="logo-header" class="logo">ZSSN</h1>
+      <div id="header-content">
+        <input type="text" name="busca" id="busca" placeholder="Pesquisar..." />
+        <a id="logout-button" href="#logout">
+          Sair
+          <span class="material-symbols-rounded"> door_open </span>
+        </a>
+      </div>
+    </div>
+    <aside id="menu-lateral">
+      <ul class="page-list">
+        <li id="home" class="page-item active">
+          <a class="button-menu" href="{% url 'home' %}">
+            <span class="material-symbols-outlined"> home </span>
+            <p>Home</p>
+          </a>
+        </li>
+        <li id="sobreviventes" class="page-item">
+          <a class="button-menu" href="{% url 'sobreviventes' %}">
+            <span class="material-symbols-rounded"> person_pin </span>
+            <p>Sobreviventes</p>
+          </a>
+        </li>
+        <li id="mercado" class="page-item">
+          <a class="button-menu" href="{% url 'mercado' %}">
+            <span class="material-symbols-rounded"> storefront </span>
+            <p>Mercado</p>
+          </a>
+        </li>
+        <li id="relatorios" class="page-item">
+          <a class="button-menu" href="{% url 'relatorios' %}">
+            <span class="material-symbols-rounded"> receipt_long </span>
+            <p>Relatorios</p>
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <div id="content">{% block content %}{% endblock %}</div>
+  </body>
+  <input type="hidden" id="current-url" value="{{ request.path }}">
+  <script
+    src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+    crossorigin="anonymous"
+  ></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</html>

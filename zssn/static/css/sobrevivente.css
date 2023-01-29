@@ -1,0 +1,16 @@
+#denunciar {
+  background-color: rgb(78, 25, 25);
+}
+
+#ver-dados {
+  background-color: rgb(25, 25, 78);
+}
+
+#trocar {
+  background-color: rgb(25, 78, 28);
+}
+
+#loc {
+  display: flex;
+}
+

@@ -8,21 +8,20 @@
 {% block title %}Sobreviventes{% endblock %} 
 
 {% block content %}
-
+<h1 class="content-title">Sobreviventes</h1>
 <div class="custom-table">
   <div class="custom-table-header">
-    <span class="custom-table-title" style="width: 30%">Nome</span>
+    <span class="custom-table-title" style="width: 35%">Nome</span>
     <span class="custom-table-title" style="width: 8.25%">Idade</span>
     <span class="custom-table-title" style="width: 12%">Sexo</span>
     <span class="custom-table-title" style="width: 12%">Status</span>
-    <!-- <span class="custom-table-title" style="width: 10.75%">Latitude</span> -->
     <span class="custom-table-title" style="width: 21.5%">Ultima Localização</span>
-    <span class="custom-table-title" style="width: 15%">Ações</span>
+    <span class="custom-table-title" style="width: 10%">Ações</span>
   </div>
   <div class="custom-table-body">
     {% for sobrevivente in object_list %}
     <div class="custom-table-row">
-      <span class="custom-table-data" style="width: 30%"
+      <span class="custom-table-data" style="width: 35%"
         >{{sobrevivente.nome}}</span
       >
       <span class="custom-table-data" style="width: 8.25%"
@@ -32,32 +31,28 @@
         >{{sobrevivente.sexo}}</span
       >
       {% if sobrevivente.infectado %}
-      <span class="custom-table-data" style="width: 12%"
+      <span class="custom-table-data" style="width: 12%; color: red;"
         >Infectado</span
       >
       {% else %}
-      <span class="custom-table-data" style="width: 12%"
+      <span class="custom-table-data" style="width: 12%; color: green;"
         >Saudável</span
       >
       {% endif %}
-      <!-- <span class="custom-table-data" style="width: 10.75%"
-        >{{sobrevivente.lat}}</span
-      > -->
       <span class="custom-table-data" id="loc" style="width: 21.5%"
         >
             <span title="Latitude" style="margin-right: 0.5rem;">[{{sobrevivente.lat}}] </span>-<span title="Longitude" style="margin-left: 0.5rem;">[{{sobrevivente.long}}]</span>
         </span
       >
-      <span class="custom-table-data-buttons" style="width: 15%">
+      <span class="custom-table-data-buttons" style="width: 10%">
+        {% if sobrevivente.infectado == False %}
         <a class="custom-table-button" id="denunciar" title="Denunciar" href="#"
           ><span class="material-symbols-outlined">warning</span></a
         >
-        <a class="custom-table-button" id="ver-dados" title="Ver" href="#"
-          ><span class="material-symbols-outlined"> visibility </span></a
-        >
-        <a class="custom-table-button" id="trocar" title="Trocar" href="#"
+        <a class="custom-table-button" id="trocar" title="Trocar" onclick="abrirModalTroca()"
           ><span class="material-symbols-outlined">cached</span></a
         >
+        {% endif %}
       </span>
     </div>
     {% empty %}
@@ -68,6 +63,26 @@
     </div>
     {% endfor %}
     
+  </div>
+</div>
+{% endblock %}
+{% block modal %}
+<div class="modal" id="modal-trocar">
+    <h1>Testando</h1>
+    <form id="token-form">
+      {% csrf_token %}
+      <input type="text" name="token" id="token">
+      <button type="button" id="token-btn">Enviar</button>
+    </form>
+</div>
+
+<div class="modal" id="modal-inventario">
+  <h1>Testando</h1>
+  <div>
+    teste
+  </div>
+  <div>
+    1teste
   </div>
 </div>
 {% endblock %}

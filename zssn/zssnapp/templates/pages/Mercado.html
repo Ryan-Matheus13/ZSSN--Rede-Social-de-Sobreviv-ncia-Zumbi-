@@ -1,7 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% load static %}
 
-{% block title %}Mercado{% endblock %}
+{% block estilo %}
+<link rel="stylesheet" href="{% static 'css/mercado.css' %}" />
+{% endblock %}
+
+{% block title %}mercados{% endblock %} 
 
 {% block content %}
-    olá 444
+<h1 class="content-title">Mercado</h1>
+<div class="market-container">
+    {% for transacao in object_list %}
+    <div class="trade-card">
+        <h3>Titulo</h3>
+        <div class="trade-items">
+            <div class="item-vendido">
+                <span>{{transacao.sobrevivente_negociador}}</span>
+            </div>
+            <div class="item-comprado">
+                <span>{{transacao.sobrevivente_receptor}}</span>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="custom-table-row">
+      <span class="custom-table-no-data"
+        >Nenhum atendimento registrado ainda
+      </span>
+    </div>
+    {% endfor %}
+    
+</div>
 {% endblock %}

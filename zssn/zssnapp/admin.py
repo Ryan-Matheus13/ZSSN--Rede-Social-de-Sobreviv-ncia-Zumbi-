@@ -11,7 +11,7 @@ class SobreviventeAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Dados do sobrevivente', {
             'classes': ('extrapretty'),
-            'fields': ('nome', 'infectado', 'idade', 'sexo', 'lat', 'long')
+            'fields': ('nome', 'token', 'infectado', 'idade', 'sexo', 'lat', 'long')
         }),
     )
 

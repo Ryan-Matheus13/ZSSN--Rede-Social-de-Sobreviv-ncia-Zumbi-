@@ -1,9 +1,6 @@
 from django.db import models
 from django.forms import ValidationError
 
-# sobrevivente
-#   id, nome, idade, sexo e ultimo local(latitude e longitude)
-
 
 class Sobrevivente(models.Model):
 
@@ -11,6 +8,7 @@ class Sobrevivente(models.Model):
     nome = models.CharField(max_length=60)
     idade = models.IntegerField()
     sexo = models.CharField(max_length=20)
+    token = models.CharField(max_length=6, null=True, unique=True)
     infectado = models.BooleanField(default=False, null=True)
     lat = models.DecimalField(max_digits=7, decimal_places=4)
     long = models.DecimalField(max_digits=7, decimal_places=4)
@@ -27,9 +25,6 @@ class Sobrevivente(models.Model):
         if self.long < -180 or self.long > 180:
             raise ValidationError("Valor de longitude é invalido, tente um valor entre (-180,0000 e 180,0000)")
 
-# infectados (se tiver 3 denuncias o inventario é bloqueado e sobrevivente é considerado contaminado)
-#   id, chave estrangeira(id do suspeito), quantidade de denuncias
-
 
 class Infectados(models.Model):
 
@@ -40,9 +35,6 @@ class Infectados(models.Model):
 
     data_do_registro = models.DateTimeField(auto_now_add=True)
 
-
-# item
-#   id, nome, valor
 
 class GrupoItens(models.Model):
 
@@ -69,9 +61,6 @@ class Item(models.Model):
     def __str__(self):
         return self.nome
 
-# mercado
-#   id, chave estrangeira(id do item de troca), chave estrangeira(id do item a ser trocado), quantidade da troca, quantidade do item a ser trocado
-
 
 class Mercado(models.Model):
 
@@ -81,21 +70,15 @@ class Mercado(models.Model):
     item_a_trocar = models.ForeignKey(
         Item, on_delete=models.SET_NULL, null=True, blank=True, related_name="itemATrocar")
     quant_itens_troca = models.IntegerField()
-    quant_itens_a_trocar = models.IntegerField()
+    quant_itens_a_trocar = models.IntegerField(null=True)
     sobrevivente_negociador = models.ForeignKey(
         Sobrevivente, on_delete=models.SET_NULL, null=True, blank=True, related_name="sobreviventeNegociador")
     sobrevivente_receptor = models.ForeignKey(
-        Sobrevivente, on_delete=models.SET_NULL, null=True, blank=True, related_name="sobreviventeReceptor")
+        Sobrevivente, on_delete=models.SET_NULL,null=True, blank=True, related_name="sobreviventeReceptor")
 
     data_do_registro = models.DateTimeField(auto_now_add=True)
 
 
-# inventario (so é possivel alterar por meio de negociação)
-#   agua = 4
-#   alimentacao = 3
-#   medicação = 2
-#   munição = 1
-#   id, id_sobrevivente, quantidade
 class Inventario(models.Model):
 
     id = models.AutoField(primary_key=True)

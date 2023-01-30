@@ -1,0 +1,20 @@
+.market-container::-webkit-scrollbar {
+    display: none;
+}
+
+.market-container {
+    /* background-color: blueviolet; */
+    height: 90%;
+    overflow: scroll;
+    display: flex;
+    gap: 1%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.trade-card {
+    background-color: #0f0f0f;
+    padding: 0.5rem;
+    height: 35%;
+    width: 18.3%;
+}

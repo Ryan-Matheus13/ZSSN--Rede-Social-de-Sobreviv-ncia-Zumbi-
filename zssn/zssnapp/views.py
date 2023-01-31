@@ -2,8 +2,8 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from rest_framework import generics
 
-from .models import Sobrevivente, Mercado, Inventario
-from .serializers import SobreviventesSerializer
+from .models import Sobrevivente, Mercado, ItensInventario, Item, GrupoItens
+from .serializers import SobreviventesSerializer, ItensInventarioSerializer, ItemSerializer,GrupoItensSerializer
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -24,7 +24,6 @@ class SobreviventesView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sobreviventes'] = Sobrevivente.objects.all()
-        context['inventario'] = Inventario.objects.all()
         return context
 
 class RelatoriosView(TemplateView):
@@ -37,6 +36,7 @@ class MercadoView(ListView):
     ]
     template_name = "pages/Mercado.html"
 
+
 class SobreviventesListApi(generics.ListCreateAPIView):
     serializer_class = SobreviventesSerializer
     def get_queryset(self):
@@ -46,3 +46,43 @@ class SobreviventesListApi(generics.ListCreateAPIView):
 class SobreviventesDetailApi(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SobreviventesSerializer
     queryset = Sobrevivente.objects.all()
+
+
+class ItensInventarioListApi(generics.ListCreateAPIView):
+    serializer_class = ItensInventarioSerializer
+    def get_queryset(self):
+        queryset = ItensInventario.objects.all()
+        return queryset
+
+class ItensInventarioDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ItensInventarioSerializer
+    queryset = ItensInventario.objects.all()
+
+
+class ItensListApi(generics.ListCreateAPIView):
+    serializer_class = ItemSerializer
+    def get_queryset(self):
+        queryset = Item.objects.all()
+        return queryset
+
+class ItensDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ItemSerializer
+    queryset = Item.objects.all()
+
+
+class GrupoItensListApi(generics.ListCreateAPIView):
+    serializer_class = GrupoItensSerializer
+    def get_queryset(self):
+        queryset = GrupoItens.objects.all()
+        return queryset
+
+class GrupoItensDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = GrupoItensSerializer
+    queryset = GrupoItens.objects.all()
+
+
+
+
+
+
+

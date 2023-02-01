@@ -11,7 +11,7 @@ class SobreviventeAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Dados do sobrevivente', {
             'classes': ('extrapretty'),
-            'fields': ('nome', 'token', 'infectado', 'itens_inventario', 'idade', 'sexo', 'lat', 'long')
+            'fields': ('nome', 'token', 'infectado', 'idade', 'sexo', 'lat', 'long')
         }),
     )
 
@@ -35,19 +35,23 @@ class InfectadosAdmin(admin.ModelAdmin):
 
 @admin.register(ItensInventario)
 class ItensInventarioAdmin(admin.ModelAdmin):
-    list_display = ("id", "item", "quantidade", "get_total")
+    list_display = ("id", "item", "quantidade", "sobrevivente",
+     "get_total")
     list_display_links = ("item",)
     fieldsets = (
         ('Dados do Item', {
             'classes': ('extrapretty'),
-            'fields': ('Item', 'Quantidade')
+            'fields': ('item', 'quantidade', 'sobrevivente')
         }),
     )
 
     def get_total(self, obj):
-        return obj.item.grupo.valor
+        quant = obj.quantidade 
+        valor = obj.item.grupo.valor
+        total = int(quant) * int(valor)
+        return f'{total} Slots'
     get_total.admin_order_field = 'item'
-    get_total.short_description = 'item'
+    get_total.short_description = 'total'
 
 
 @admin.register(Item)

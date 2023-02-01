@@ -27,19 +27,6 @@ class Item(models.Model):
         return self.nome
 
 
-class ItensInventario(models.Model):
-
-    id = models.AutoField(primary_key=True)
-    item = models.ForeignKey(
-        Item, on_delete=models.SET_NULL, null=True, blank=True, related_name="item")
-    quantidade = models.CharField(max_length=10)
-
-    data_do_registro = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.item.nome}' + f' - {self.quantidade}X'
-
-
 class Sobrevivente(models.Model):
 
     id = models.AutoField(primary_key=True)
@@ -47,7 +34,6 @@ class Sobrevivente(models.Model):
     idade = models.IntegerField()
     sexo = models.CharField(max_length=20)
     token = models.CharField(max_length=6, null=True, unique=True)
-    itens_inventario = models.ManyToManyField(ItensInventario)
     infectado = models.BooleanField(default=False, null=True)
     lat = models.DecimalField(max_digits=7, decimal_places=4)
     long = models.DecimalField(max_digits=7, decimal_places=4)
@@ -63,6 +49,21 @@ class Sobrevivente(models.Model):
             raise ValidationError("Valor de latitude é invalido, tente um valor entre (-90,0000,0000 e 90)")
         if self.long < -180 or self.long > 180:
             raise ValidationError("Valor de longitude é invalido, tente um valor entre (-180,0000 e 180,0000)")
+
+
+class ItensInventario(models.Model):
+
+    id = models.AutoField(primary_key=True)
+    item = models.ForeignKey(
+        Item, on_delete=models.SET_NULL, null=True, blank=True, related_name="item")
+    quantidade = models.CharField(max_length=10)
+    sobrevivente = models.ForeignKey(
+        Sobrevivente, on_delete=models.SET_NULL, null=True, blank=True, related_name="item")
+
+    data_do_registro = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.item.nome}' + f' - {self.quantidade}X'
 
 
 class Infectados(models.Model):

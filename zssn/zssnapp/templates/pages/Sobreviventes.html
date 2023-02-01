@@ -1,9 +1,9 @@
 {% extends 'base.html' %} 
-{% load static %}
+{% load static %} 
 
 {% block estilo %}
 <link rel="stylesheet" href="{% static 'css/sobrevivente.css' %}" />
-{% endblock %}
+{% endblock %} 
 
 {% block title %}Sobreviventes{% endblock %} 
 
@@ -15,7 +15,9 @@
     <span class="custom-table-title" style="width: 8.25%">Idade</span>
     <span class="custom-table-title" style="width: 12%">Sexo</span>
     <span class="custom-table-title" style="width: 12%">Status</span>
-    <span class="custom-table-title" style="width: 21.5%">Ultima Localização</span>
+    <span class="custom-table-title" style="width: 21.5%"
+      >Ultima Localização</span
+    >
     <span class="custom-table-title" style="width: 10%">Ações</span>
   </div>
   <div class="custom-table-body">
@@ -31,25 +33,31 @@
         >{{sobrevivente.sexo}}</span
       >
       {% if sobrevivente.infectado %}
-      <span class="custom-table-data" style="width: 12%; color: red;"
+      <span class="custom-table-data" style="width: 12%; color: red"
         >Infectado</span
       >
       {% else %}
-      <span class="custom-table-data" style="width: 12%; color: green;"
+      <span class="custom-table-data" style="width: 12%; color: green"
         >Saudável</span
       >
       {% endif %}
-      <span class="custom-table-data" id="loc" style="width: 21.5%"
+      <span class="custom-table-data" id="loc" style="width: 21.5%">
+        <span title="Latitude" style="margin-right: 0.5rem"
+          >[{{sobrevivente.lat}}] </span
+        >-<span title="Longitude" style="margin-left: 0.5rem"
+          >[{{sobrevivente.long}}]</span
         >
-            <span title="Latitude" style="margin-right: 0.5rem;">[{{sobrevivente.lat}}] </span>-<span title="Longitude" style="margin-left: 0.5rem;">[{{sobrevivente.long}}]</span>
-        </span
-      >
+      </span>
       <span class="custom-table-data-buttons" style="width: 10%">
         {% if sobrevivente.infectado == False %}
         <a class="custom-table-button" id="denunciar" title="Denunciar" href="#"
           ><span class="material-symbols-outlined">warning</span></a
         >
-        <a class="custom-table-button" id="trocar" title="Trocar" onclick="abrirModalTroca()"
+        <a
+          class="custom-table-button"
+          id="trocar"
+          title="Trocar"
+          onclick="abrirModalTroca()"
           ><span class="material-symbols-outlined">cached</span></a
         >
         {% endif %}
@@ -62,27 +70,35 @@
       </span>
     </div>
     {% endfor %}
-    
   </div>
 </div>
-{% endblock %}
+{% endblock %} 
 {% block modal %}
 <div class="modal" id="modal-trocar">
-    <h1>Testando</h1>
-    <form id="token-form">
-      {% csrf_token %}
-      <input type="text" name="token" id="token">
-      <button type="button" id="token-btn">Enviar</button>
-    </form>
+  <h1>Testando</h1>
+  <form id="token-form">
+    {% csrf_token %}
+    <input type="text" name="token" id="token" />
+    <button type="button" id="token-btn">Enviar</button>
+  </form>
 </div>
 
 <div class="modal" id="modal-inventario">
-  <h1>Testando</h1>
-  <div>
-    teste
+  <div class="header-modal">
+    <h1 class="content-title">Inventario</h1>
+    <button onclick="fecharModalInventario()">Fechar</button>
   </div>
-  <div>
-    1teste
+  <div class="custom-table" id="inventario-table">
+    <div class="custom-table-header">
+      <span class="custom-table-title" style="width: 50%">Item</span>
+      <span class="custom-table-title" style="width: 15%">Quant.</span>
+      <span class="custom-table-title" style="width: 15%">Valor</span>
+      <span class="custom-table-title" style="width: 15%">Total</span>
+      <span class="custom-table-title" style="width: 5%"></span>
+    </div>
+    <div id="inventario-body" class="custom-table-body">
+      
+    </div>
   </div>
 </div>
 {% endblock %}

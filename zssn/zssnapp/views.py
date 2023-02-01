@@ -50,13 +50,16 @@ class SobreviventesDetailApi(generics.RetrieveUpdateDestroyAPIView):
 
 class ItensInventarioListApi(generics.ListCreateAPIView):
     serializer_class = ItensInventarioSerializer
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         queryset = ItensInventario.objects.all()
+        print(**kwargs)
         return queryset
 
 class ItensInventarioDetailApi(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ItensInventarioSerializer
-    queryset = ItensInventario.objects.all()
+    def get_queryset(self):
+        queryset = ItensInventario.objects.all()
+        return queryset
 
 
 class ItensListApi(generics.ListCreateAPIView):

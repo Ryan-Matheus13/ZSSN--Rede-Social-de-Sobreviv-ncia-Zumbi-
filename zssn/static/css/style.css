@@ -36,6 +36,34 @@ a {
   background-color: #1d1d1d !important;
 }
 
+.swal2-modal {
+  color: #fff !important;
+  background-color: #1d1d1d !important;
+}
+
+.swal2-loading {
+  color: #fff !important;
+  background-color: transparent !important;
+}
+
+.swal2-loader {
+  border-color: #fff rgba(0,0,0,0) #fff rgba(0,0,0,0) !important;
+}
+
+.btn-modal {
+  width: 50%;
+  height: 3rem;
+  margin-top: 1rem;
+  background-color: rgb(27, 29, 59);
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+}
+
+.btn-cancelar {
+  background-color: rgb(100, 25, 25);
+}
+
 #header {
   grid-area: header;
   display: flex;
@@ -57,17 +85,17 @@ a {
   justify-content: space-between;
 }
 
-#busca:focus {
+#busca:focus, .input-modal:focus {
   outline: none;
 }
 
-#busca::placeholder {
+#busca::placeholder, .input-modal::placeholder {
   color: #bbb;
   font-weight: normal;
   font-family: "Poppins", sans-serif;
 }
 
-#busca {
+#busca, .input-modal {
   height: 50%;
   width: 47.06%;
   border: 0.1rem solid #bbb;
@@ -76,6 +104,11 @@ a {
   background-color: transparent;
   color: #bbb;
   font-weight: normal;
+}
+
+.input-modal {
+  height: 3rem;
+  width: 100%;
 }
 
 #logout-button:hover {
@@ -207,3 +240,4 @@ a {
 .custom-table-button span {
     font-size: 1.5em;
 }
+

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import IndexView, LoginView, CadastroView, SobreviventesView, RelatoriosView, MercadoView, SobreviventesListApi, SobreviventesDetailApi, ItensInventarioListApi, ItensInventarioDetailApi, ItensListApi, ItensDetailApi, GrupoItensListApi, GrupoItensDetailApi
+from .views import IndexView, LoginView, CadastroView, SobreviventesView, RelatoriosView, MercadoView, SobreviventesListApi, SobreviventesDetailApi, ItensInventarioListApi, ItensInventarioDetailApi, ItensListApi, ItensDetailApi, GrupoItensListApi, GrupoItensDetailApi, InfectadosListApi, InfectadosDetailApi
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
@@ -23,4 +23,8 @@ urlpatterns = [
     # grupo de itens
     path('api/grupo-itens', GrupoItensListApi.as_view()),
     path('api/grupo-itens/<int:pk>/', GrupoItensDetailApi.as_view()),
+
+    # infectados
+    path('api/infectados', InfectadosListApi.as_view()),
+    path('api/infectados/<int:pk>/', InfectadosDetailApi.as_view()),
 ]

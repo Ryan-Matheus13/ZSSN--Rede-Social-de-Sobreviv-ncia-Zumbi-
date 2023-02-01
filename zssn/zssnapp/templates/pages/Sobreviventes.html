@@ -22,6 +22,7 @@
   </div>
   <div class="custom-table-body">
     {% for sobrevivente in object_list %}
+    
     <div class="custom-table-row">
       <span class="custom-table-data" style="width: 35%"
         >{{sobrevivente.nome}}</span
@@ -50,14 +51,17 @@
       </span>
       <span class="custom-table-data-buttons" style="width: 10%">
         {% if sobrevivente.infectado == False %}
-        <a class="custom-table-button" id="denunciar" title="Denunciar" href="#"
+        <a 
+          class="custom-table-button" 
+          id="denunciar" title="Denunciar" 
+          onclick="abrirModalDenuncia('{{sobrevivente.id}}')"
           ><span class="material-symbols-outlined">warning</span></a
         >
         <a
           class="custom-table-button"
           id="trocar"
           title="Trocar"
-          onclick="abrirModalTroca()"
+          onclick="abrirModalTroca('{{sobrevivente.id}}')"
           ><span class="material-symbols-outlined">cached</span></a
         >
         {% endif %}
@@ -75,19 +79,19 @@
 {% endblock %} 
 {% block modal %}
 <div class="modal" id="modal-trocar">
-  <h1>Testando</h1>
+  <h1 class="content-title">Buscar inventario</h1>
   <form id="token-form">
     {% csrf_token %}
-    <input type="text" name="token" id="token" />
-    <button type="button" id="token-btn">Enviar</button>
+    <div id="modal-token-form-container">
+      <span>Insira seu token de inventario:</span>
+      <input class="input-modal" type="text" name="token" id="token" />
+    </div>
+    <button type="button" id="token-btn" class="btn-modal">Enviar</button>
   </form>
 </div>
 
 <div class="modal" id="modal-inventario">
-  <div class="header-modal">
-    <h1 class="content-title">Inventario</h1>
-    <button onclick="fecharModalInventario()">Fechar</button>
-  </div>
+  <h1 class="content-title">Seu Inventario</h1>
   <div class="custom-table" id="inventario-table">
     <div class="custom-table-header">
       <span class="custom-table-title" style="width: 50%">Item</span>
@@ -101,4 +105,26 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="modal-denuncia">
+  <h1 class="content-title">Denunciar sobrevivente</h1>
+  <div>
+    <span>Deseja denunciar esse sobrevivente?</span>
+  </div>
+  <form id="denuncia-form">
+    {% csrf_token %}
+    <input type="hidden" id="denunciasInp" name="denuncias">
+    <input type="hidden" id="sobreviventeInp" name="sobrevivente">
+  </form>
+  <form id="atualizar-infectado-form">
+    {% csrf_token %}
+    <input type="hidden" id="infectadoInp" name="infectado">
+  </form>
+  <div>
+
+    <button class="btn-modal" onclick="buscarDenunciasSobrevivente()">Denunciar</button>
+    <button class="btn-modal btn-cancelar">Cancelar</button>
+  </div>
+</div>
+
 {% endblock %}

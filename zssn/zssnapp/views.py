@@ -2,8 +2,8 @@ from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from rest_framework import generics
 
-from .models import Sobrevivente, Mercado, ItensInventario, Item, GrupoItens
-from .serializers import SobreviventesSerializer, ItensInventarioSerializer, ItemSerializer,GrupoItensSerializer
+from .models import Sobrevivente, Mercado, ItensInventario, Item, GrupoItens, Infectados
+from .serializers import SobreviventesSerializer, ItensInventarioSerializer, ItemSerializer,GrupoItensSerializer, InfectadosSerializer
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -82,6 +82,17 @@ class GrupoItensListApi(generics.ListCreateAPIView):
 class GrupoItensDetailApi(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GrupoItensSerializer
     queryset = GrupoItens.objects.all()
+
+
+class InfectadosListApi(generics.ListCreateAPIView):
+    serializer_class = InfectadosSerializer
+    def get_queryset(self):
+        queryset = Infectados.objects.all()
+        return queryset
+
+class InfectadosDetailApi(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = InfectadosSerializer
+    queryset = Infectados.objects.all()
 
 
 

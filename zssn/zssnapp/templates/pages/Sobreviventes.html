@@ -8,7 +8,10 @@
 {% block title %}Sobreviventes{% endblock %} 
 
 {% block content %}
-<h1 class="content-title">Sobreviventes</h1>
+<div class="header-content">
+  <a class="btn" onclick="abrirModalCadastroSobrevivente()">Cadastrar sobrevivente</a>
+  <h1 class="content-title">Sobreviventes</h1>
+</div>
 <div class="custom-table">
   <div class="custom-table-header">
     <span class="custom-table-title" style="width: 35%">Nome</span>
@@ -125,14 +128,52 @@
 </div>
 
 <div class="modal" id="modal-cadastro">
-  <h1 class="content-title">Denunciar sobrevivente</h1>
-  <div>
-    <span>Deseja denunciar esse sobrevivente?</span>
-  </div>
-  <div>
+    <h1 class="content-title">Cadastrar sobrevivente</h1>
+    <div>
+      <form id="form-cadastro-sobrevivente">
+        <div class="input-container">
+          <label for="">Nome</label>
+          <input class="input-modal" type="text" id="nome-sobrevivente">
+        </div>
+        <div class="input-container">
+          <label for="">Idade</label>
+          <input class="input-modal" type="number" id="idade-sobrevivente">
+        </div>
+        <div class="input-container">
+          <label for="">Sexo</label>
+          <input class="input-modal" type="text" id="sexo-sobrevivente">
+        </div>
+        <div class="input-container">
+          <label for="">Token de inventario</label>
+          <input class="input-modal" type="number" maxlength="6" id="token-sobrevivente">
+        </div>
+      </form>
+      <form id="form-cadastro-itens-sobrevivente">
+        <h4 style="margin-top: 1.5rem;">Adicionar itens</h4>
+        <div style="display: flex; gap: 1rem;">
+          <div class="input-container" style="flex:1 ;">
+            <label for="">Itens</label>
+            <select style="height: 3rem; width: 100%; padding: 0.8rem; border: 0.1rem solid #bbb;border-radius: 1rem; background-color: transparent; color: #bbb; font-weight: normal;" id="select-item">
+              <option value="" disabled selected>Selecione</option>
+            </select>
+          </div>
+          <div class="input-container" style="flex:1 ;">
+            <label for="">Quantidade</label>
+            <input class="input-modal" type="number" id="quantidade-sobrevivente">
+          </div>
+          <div class="input-container" style="flex:0 ; justify-content: flex-end;">
+            <button type="button" class="btn-sm" onclick="adicionarItem()">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="itens-adicionados" id="itens-adicionados" style="display: none;">
+      
+    </div>
+  <div style="display: flex; gap: 1rem;">
 
-    <button class="btn-modal" onclick="buscarDenunciasSobrevivente()">Denunciar</button>
-    <button class="btn-modal btn-cancelar">Cancelar</button>
+    <button style="flex: 1;" type="button" class="btn-modal" onclick="cadastrarSobrevivente()">Cadastrar</button>
+    <button style="flex: 1;" type="button" class="btn-modal btn-cancelar">Cancelar</button>
   </div>
 </div>
 

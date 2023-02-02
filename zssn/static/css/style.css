@@ -52,8 +52,8 @@ a {
 
 .btn-modal {
   width: 50%;
-  height: 3rem;
-  margin-top: 1rem;
+  height: 4rem;
+  margin-top: 1.5rem;
   background-color: rgb(27, 29, 59);
   color: #fff;
   border-radius: 1rem;
@@ -108,7 +108,7 @@ a {
 
 .input-modal {
   height: 3rem;
-  width: 100%;
+  width: auto;
 }
 
 #logout-button:hover {
@@ -241,3 +241,21 @@ a {
     font-size: 1.5em;
 }
 
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-sm {
+  height: 4rem;
+  width: 4rem;
+  background-color: rgb(25, 25, 78);
+  color: #fff;
+  border-radius: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-sm:focus {
+  outline: none;
+}

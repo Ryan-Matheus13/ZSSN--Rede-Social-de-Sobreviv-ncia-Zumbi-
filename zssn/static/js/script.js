@@ -1,9 +1,12 @@
 var url;
 var idSobreviventeSolicitado;
 var csrf_token = $("#csrf_token").val();
+var sobrevivente = {};
+var itensSobrevivente = [];
 
 $(document).ready(() => {
   ativarItemMenu();
+  preencherSelectItens();
 });
 
 $("form").on("keyup keypress", function (e) {
@@ -36,9 +39,9 @@ const ativarItemMenu = () => {
   }
 };
 
-$(".btn-cancelar").on('click', () => {
-  $(".modal").modal("hide")
-})
+$(".btn-cancelar").on("click", () => {
+  $(".modal").modal("hide");
+});
 
 const abrirModalTroca = (id) => {
   $("#modal-trocar").modal(
@@ -225,7 +228,7 @@ const addLinhaTabelaInventario = (inventario) => {
 };
 
 const buscarDenunciasSobrevivente = () => {
-  let infectado = false
+  let infectado = false;
 
   Swal.fire({
     title: "Aguarde",
@@ -246,8 +249,7 @@ const buscarDenunciasSobrevivente = () => {
             data.results.map((item, index) => {
               if (item.sobrevivente == idSobreviventeSolicitado) {
                 infectado = item;
-                
-              } 
+              }
             });
           } else {
             denunciarSobrevivente(idSobreviventeSolicitado, 1, "insert");
@@ -260,7 +262,11 @@ const buscarDenunciasSobrevivente = () => {
           if (infectado.denuncias >= 3) {
             atualizarInfectado(idSobreviventeSolicitado);
           } else {
-            denunciarSobrevivente(idSobreviventeSolicitado, infectado.id, infectado.denuncias);
+            denunciarSobrevivente(
+              idSobreviventeSolicitado,
+              infectado.id,
+              infectado.denuncias
+            );
           }
         }
       });
@@ -278,7 +284,7 @@ const atualizarInfectado = (id) => {
     dataType: "json",
     headers: {
       "X-Requested-With": "XMLHttpRequest",
-      "X-CSRFToken": csrf_token, 
+      "X-CSRFToken": csrf_token,
     },
     success: function (data) {
       sobrevivente = data;
@@ -293,7 +299,7 @@ const atualizarInfectado = (id) => {
       data: sobrevivente,
       headers: {
         "X-Requested-With": "XMLHttpRequest",
-        "X-CSRFToken": csrf_token, 
+        "X-CSRFToken": csrf_token,
       },
       success: function (data) {},
     }).then(() => {
@@ -304,7 +310,12 @@ const atualizarInfectado = (id) => {
   });
 };
 
-const denunciarSobrevivente = (id, idInfectado, quantDenuncias = 0, modo = "update") => {
+const denunciarSobrevivente = (
+  id,
+  idInfectado,
+  quantDenuncias = 0,
+  modo = "update"
+) => {
   // console.log(modo);
   if (modo == "insert") {
     // console.log("ENTROU POST");
@@ -316,16 +327,14 @@ const denunciarSobrevivente = (id, idInfectado, quantDenuncias = 0, modo = "upda
       data: { denuncias: 1, sobrevivente: id },
       headers: {
         "X-Requested-With": "XMLHttpRequest",
-        "X-CSRFToken": csrf_token, 
+        "X-CSRFToken": csrf_token,
       },
-      success: function (data) {
-        
-      },
+      success: function (data) {},
     }).then(() => {
       setTimeout(() => {
         location.reload();
-      }, 1000);  
-    })
+      }, 1000);
+    });
   } else {
     total = quantDenuncias + 1;
     // console.log(total)
@@ -339,7 +348,7 @@ const denunciarSobrevivente = (id, idInfectado, quantDenuncias = 0, modo = "upda
         data: { denuncias: quantDenuncias + 1 },
         headers: {
           "X-Requested-With": "XMLHttpRequest",
-          "X-CSRFToken": csrf_token, 
+          "X-CSRFToken": csrf_token,
         },
         success: function (data) {
           atualizarInfectado(id);
@@ -355,7 +364,7 @@ const denunciarSobrevivente = (id, idInfectado, quantDenuncias = 0, modo = "upda
         data: { denuncias: quantDenuncias + 1 },
         headers: {
           "X-Requested-With": "XMLHttpRequest",
-          "X-CSRFToken": csrf_token, 
+          "X-CSRFToken": csrf_token,
         },
         success: function (data) {},
       }).then(() => {
@@ -368,22 +377,22 @@ const denunciarSobrevivente = (id, idInfectado, quantDenuncias = 0, modo = "upda
 };
 
 function randomizeValue() {
-	var value = (1 + 10E-16) * Math.random();
-  
-  	if (value > 1.0) {
-    	return 1.0;
-    }
-  
-  	return value;
+  var value = (1 + 10e-16) * Math.random();
+
+  if (value > 1.0) {
+    return 1.0;
+  }
+
+  return value;
 }
 
 function randomizeFloat(min, max) {
-  if(max == null) {
-    max = (min == null ? Number.MAX_VALUE : min);
-      min = 0.0;
+  if (max == null) {
+    max = min == null ? Number.MAX_VALUE : min;
+    min = 0.0;
   }
   value = min + (max - min) * randomizeValue();
-  return value.toFixed(4)
+  return value.toFixed(4);
 }
 
 const atualizarLoc = (id) => {
@@ -403,7 +412,7 @@ const atualizarLoc = (id) => {
         dataType: "json",
         headers: {
           "X-Requested-With": "XMLHttpRequest",
-          "X-CSRFToken": csrf_token, 
+          "X-CSRFToken": csrf_token,
         },
         success: function (data) {
           sobrevivente = data;
@@ -419,7 +428,7 @@ const atualizarLoc = (id) => {
           data: sobrevivente,
           headers: {
             "X-Requested-With": "XMLHttpRequest",
-            "X-CSRFToken": csrf_token, 
+            "X-CSRFToken": csrf_token,
           },
           success: function (data) {},
         }).then(() => {
@@ -430,4 +439,147 @@ const atualizarLoc = (id) => {
       });
     },
   });
-}
+};
+
+const preencherSelectItens = () => {
+  let itens;
+  $.ajax({
+    url: "http://127.0.0.1:8000/api/itens?format=json",
+    type: "GET",
+    success: function (data) {
+      itens = data.results;
+    },
+  }).then(() => {
+    itens.map((item, index) => {
+      let elemento = `
+                  <option value="${item.id}">
+                    ${item.nome}
+                  </option>
+                  `;
+      $("#select-item").append(elemento);
+    });
+  });
+};
+
+const abrirModalCadastroSobrevivente = () => {
+  $("#modal-cadastro").modal({ fadeDuration: 100 }, "show");
+};
+
+const adicionarItem = () => {
+  let itemId = $("#select-item").val();
+  let quantItem = $("#quantidade-sobrevivente").val();
+  let item;
+
+  if (itemId == "" || quantItem == "") {
+    Swal.fire({
+      icon: "warning",
+      title: "Atenção",
+      text: "Campos de itens invalidos ou vazios!",
+    });
+  } else {
+    $.ajax({
+      url: "http://127.0.0.1:8000/api/itens/" + itemId + "/",
+      type: "GET",
+      success: function (data) {
+        item = data;
+      },
+    }).then(() => {
+      console.log(item);
+      let elemento = `
+                    <div class="itens-adicionados-row">
+                      <span class="item-nome">${item.nome}</span>
+                      <span class="item-quantidade">${quantItem}x</span>
+                    </div>
+                    `;
+
+      $("#itens-adicionados").prepend(elemento);
+      console.log("aaaaaaa");
+      $("#itens-adicionados").css("display", "flex");
+      itensSobrevivente.push({
+        item: item.id,
+        quantidade: quantItem,
+        sobrevivente: -1,
+      });
+    });
+  }
+};
+
+const cadastrarSobrevivente = () => {
+  let nome = $("#nome-sobrevivente").val();
+  let idade = $("#idade-sobrevivente").val();
+  let sexo = $("#sexo-sobrevivente").val();
+  let token = $("#token-sobrevivente").val();
+
+  let idSobrevivente;
+
+  if (nome == "" || idade == "" || sexo == "" || token == "") {
+    Swal.fire({
+      icon: "warning",
+      title: "Atenção",
+      text: "Campos de sobrevivente invalidos ou vazios!",
+    });
+  } else {
+    Swal.fire({
+      title: "Cadastrando sobrevivente",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      willOpen: () => {
+        $("#modal-cadastro").modal("hide");
+        Swal.showLoading();
+      },
+      didOpen: () => {
+        $.ajax({
+          url: "http://127.0.0.1:8000/api/sobreviventes",
+          credentials: "same-origin",
+          type: "POST",
+          dataType: "json",
+          data: {
+            nome,
+            idade,
+            sexo,
+            token,
+            infectado: false,
+            lat: randomizeFloat(-90, 90),
+            long: randomizeFloat(-180, 180),
+          },
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": csrf_token,
+          },
+          success: function (data) {},
+        }).then(() => {
+          $.ajax({
+            url: "http://127.0.0.1:8000/api/sobreviventes?format=json",
+            type: "GET",
+            success: function (data) {
+              data.results.map((item, index) => {
+                if (token == item.token) {
+                  idSobrevivente = item.id;
+                }
+              });
+            },
+          }).then(() => {
+            itensSobrevivente.map((item, index) => {
+              item.sobrevivente = idSobrevivente;
+              $.ajax({
+                url: "http://127.0.0.1:8000/api/itens-inventario",
+                credentials: "same-origin",
+                type: "POST",
+                dataType: "json",
+                data: item,
+                headers: {
+                  "X-Requested-With": "XMLHttpRequest",
+                  "X-CSRFToken": csrf_token,
+                },
+                success: function (data) {},
+              });
+            });
+          });
+        });
+      },
+    });
+
+    location.reload();
+  }
+};

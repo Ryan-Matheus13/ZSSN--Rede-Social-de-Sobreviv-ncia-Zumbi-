@@ -30,3 +30,21 @@
 #modal-inventario {
   max-width: 60rem !important;
 }
+
+#modal-cadastro {
+  display: flex;
+  max-width: 80rem;
+}
+
+#form-cadastro-itens-sobrevivente {
+  display: flex;
+  flex-direction: column;
+}
+
+#select-item {
+  flex: 4;
+}
+
+#quantidade-sobrevivente {
+  flex: 2;
+}
